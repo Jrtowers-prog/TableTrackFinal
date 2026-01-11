@@ -14,27 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TableTrackFinal"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".LogIn" />
-        <activity android:name=".signUp" />
-        <activity android:name=".customerhome" />
-        <activity android:name=".staffhome" />
-        <activity android:name=".Menu" />
-        <activity android:name=".edit_menu_item_staff" />
-        <activity android:name=".view_Reservations" />
-        <activity android:name=".MakeReservationActivity" />
-        <activity android:name=".settings" />
-        <activity android:name=".ReservationViewActivity" />
 
     </application>
 </manifest>

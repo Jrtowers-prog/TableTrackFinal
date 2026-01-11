@@ -4,8 +4,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    // This is the University API URL for this module
-    private static final String BASE_URL = "https://web.socem.plymouth.ac.uk/COMP2000/api/";
+    // Base URL from API Document Page 1
+    private static final String BASE_URL = "http://10.240.72.69/comp2000/coursework/";
     private static Retrofit retrofit = null;
 
     public static ApiService getService() {
