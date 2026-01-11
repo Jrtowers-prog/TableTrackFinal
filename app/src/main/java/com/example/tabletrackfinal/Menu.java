@@ -55,9 +55,8 @@ public class Menu extends AppCompatActivity {
             menuList.add("No items found");
         } else {
             while (cursor.moveToNext()) {
-                // Fetch columns 1 (Name) and 3 (Price) from DatabaseHelper
-                String name = cursor.getString(1);
-                double price = cursor.getDouble(3);
+                String name = cursor.getString(0); // Column 0: name
+                double price = cursor.getDouble(2); // Column 2: price
                 menuList.add(name + " - £" + price);
             }
         }
@@ -69,6 +68,6 @@ public class Menu extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadMenu(); // Refresh list if we added an item and came back
+        loadMenu(); // Refresh list when returning
     }
 }

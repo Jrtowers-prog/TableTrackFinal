@@ -1,9 +1,12 @@
 package com.example.tabletrackfinal;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,57 +26,62 @@ public class view_Reservations extends AppCompatActivity {
         setContentView(R.layout.activity_view_reservations);
 
         db = new DatabaseHelper(this);
-        listView = findViewById(R.id.resListView); // Ensure this ID is in activity_view_reservations.xml
+        listView = findViewById(R.id.resListView);
+        Button btnMake = findViewById(R.id.btnMakeRes);
         ImageView btnHome = findViewById(R.id.home);
+        ImageView btnSettings = findViewById(R.id.settings);
 
-        btnHome.setOnClickListener(v -> finish());
-
-        loadBookings();
-    }
-
-    private void loadBookings() {
-        bookingList = new ArrayList<>();
-
-        // 1. Get current user info
         SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         String role = prefs.getString("role", "Guest");
         String username = prefs.getString("username", "");
 
-        Cursor cursor;
-
-        // 2. Decide what to fetch based on role
-        if ("Staff".equalsIgnoreCase(role)) {
-            cursor = db.getAllReservations(); // Staff sees everything
+        // Only guests should see "Book Table" here
+        if("Staff".equalsIgnoreCase(role)){
+            btnMake.setVisibility(View.GONE);
         } else {
-            cursor = db.getCustomerReservations(username); // Customer sees own
+            btnMake.setVisibility(View.VISIBLE);
         }
 
-        // 3. Process data
+        btnMake.setOnClickListener(v -> startActivity(new Intent(this, MakeReservationActivity.class)));
+        btnHome.setOnClickListener(v -> finish());
+        btnSettings.setOnClickListener(v -> startActivity(new Intent(this, settings.class)));
+
+        loadBookings(role, username);
+    }
+
+    private void loadBookings(String role, String username) {
+        bookingList = new ArrayList<>();
+        Cursor cursor;
+
+        if ("Staff".equalsIgnoreCase(role)) {
+            cursor = db.getAllReservations();
+        } else {
+            cursor = db.getCustomerReservations(username);
+        }
+
         if (cursor.getCount() == 0) {
             bookingList.add("No reservations found.");
         } else {
             while (cursor.moveToNext()) {
-                // Column 0 is ID, 1 is User, 2 is Date, 3 is Time
+                // Formatting the display string
                 String data = "Ref: " + cursor.getString(0) + "\n" +
                         "Date: " + cursor.getString(2) + " Time: " + cursor.getString(3) + "\n" +
-                        "User: " + cursor.getString(1);
+                        "Guest: " + cursor.getString(1);
                 bookingList.add(data);
             }
         }
 
-        // 4. Show in list
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, bookingList);
         listView.setAdapter(adapter);
 
-        // Simple cancellation on click
+        // Click to cancel
         listView.setOnItemClickListener((parent, view, position, id) -> {
             String item = bookingList.get(position);
             if(item.startsWith("Ref:")) {
-                // Extract ID crudely for simplicity
                 String resId = item.split("\n")[0].replace("Ref: ", "");
                 db.cancelReservation(resId);
                 Toast.makeText(this, "Reservation Cancelled", Toast.LENGTH_SHORT).show();
-                loadBookings(); // Refresh list
+                loadBookings(role, username); // Refresh
             }
         });
     }

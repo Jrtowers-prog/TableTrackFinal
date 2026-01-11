@@ -14,11 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create Menu Table
         db.execSQL("create Table Menu(name TEXT primary key, description TEXT, price REAL, image TEXT)");
-
-        // Create Reservations Table
-        // ID (Auto-increment), Username (links to login), Date, Time, Size
         db.execSQL("create Table Reservations(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, date TEXT, time TEXT, size INTEGER)");
     }
 
@@ -29,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // --- MENU METHODS ---
+    // Insert Menu Item
     public boolean addMenuItem(String name, String description, double price, String imageUri) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -41,12 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    // Get All Menu Items
     public Cursor getAllMenuItems() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from Menu", null);
     }
 
-    // --- RESERVATION METHODS ---
+    // Add Reservation
     public boolean addReservation(String username, String date, String time, int size) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -58,19 +55,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    // Get All Reservations (Staff)
     public Cursor getAllReservations() {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from Reservations", null);
     }
 
+    // Get Specific Customer Reservations
     public Cursor getCustomerReservations(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery("select * from Reservations where username = ?", new String[]{username});
     }
 
+    // Cancel Reservation
     public boolean cancelReservation(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete("Reservations", "id=?", new String[]{id});
-        return result > 0;
+        return db.delete("Reservations", "id=?", new String[]{id}) > 0;
     }
 }
