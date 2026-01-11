@@ -1,61 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    package="com.example.tabletrackfinal">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TableTrackFinal">
-        <activity
-            android:name=".view_Reservations"
-            android:exported="false" />
-        <activity
-            android:name=".reservation_view_staff"
-            android:exported="false" />
-        <activity
-            android:name=".edit_menu_item_staff"
-            android:exported="false" />
-        <activity
-            android:name=".settings"
-            android:exported="false" />
-        <activity
-            android:name=".menuItem"
-            android:exported="false" />
-        <activity
-            android:name=".reservationView"
-            android:exported="false" />
-        <activity
-            android:name=".viewReservations"
-            android:exported="false" />
-        <activity
-            android:name=".Menu"
-            android:exported="false" />
-        <activity
-            android:name=".customerhome"
-            android:exported="false" />
-        <activity
-            android:name=".staffhome"
-            android:exported="false" />
-        <activity
-            android:name=".signUp"
-            android:exported="false" />
-        <activity
-            android:name=".LogIn"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+
+        <activity android:name=".LogIn" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name=".signUp" />
+        <activity android:name=".customerhome" />
+        <activity android:name=".staffhome" />
+        <activity android:name=".Menu" />
+        <activity android:name=".edit_menu_item_staff" />
+        <activity android:name=".view_Reservations" />
+        <activity android:name=".MakeReservationActivity" />
+        <activity android:name=".settings" />
+        <activity android:name=".ReservationViewActivity" />
+
+    </application>
 </manifest>

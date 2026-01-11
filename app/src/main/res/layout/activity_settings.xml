@@ -69,6 +69,7 @@
                 android:id="@+id/logOutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
                 android:text="Log Out"
                 android:textSize="18sp"
                 android:backgroundTint="#7A9244"
@@ -80,9 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="60dp"
                 android:paddingTop="50dp"
                 android:gravity="center_vertical"
-                android:layout_marginTop="20dp">
+                >
 
                 <Button
                     android:id="@+id/notificationButton"

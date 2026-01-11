@@ -94,6 +94,17 @@
             android:padding="10dp"
             android:layout_marginBottom="50dp"/>
 
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textSize="18sp"
+            android:backgroundTint="#7A9244"
+            android:textColor="@android:color/white"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp" />
+
 
 
     </LinearLayout>
