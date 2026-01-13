@@ -13,8 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LogIn extends AppCompatActivity {
-    EditText etUser, etPass;
-    // TODO: REPLACE THIS WITH YOUR ACTUAL STUDENT ID
+    EditText getUser, getPass;
     String STUDENT_ID = "10933286";
 
     @Override
@@ -22,8 +21,8 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        etUser = findViewById(R.id.usernameInput);
-        etPass = findViewById(R.id.passwordInput);
+        getUser = findViewById(R.id.usernameInput);
+        getPass = findViewById(R.id.passwordInput);
         Button btnCust = findViewById(R.id.customerLoginButton);
         Button btnStaff = findViewById(R.id.staffLoginButton);
         ImageView btnHome = findViewById(R.id.home);
@@ -42,8 +41,8 @@ public class LogIn extends AppCompatActivity {
     }
 
     private void login() {
-        String username = etUser.getText().toString().trim();
-        String password = etPass.getText().toString().trim();
+        String username = getUser.getText().toString().trim();
+        String password = getPass.getText().toString().trim();
 
         if(username.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Please enter details", Toast.LENGTH_SHORT).show();
@@ -66,9 +65,18 @@ public class LogIn extends AppCompatActivity {
 
                         Toast.makeText(LogIn.this, "Welcome " + user.getFirstName(), Toast.LENGTH_SHORT).show();
 
-                        if ("Staff".equalsIgnoreCase(user.getUserType())) {
+                        // 1. Get the role safely
+                        String role = user.getUserType();
+
+                        // 2. Debugging: This will show you exactly what the API is returning in a toast message
+                        // You can remove this line once it is working
+                        Toast.makeText(LogIn.this, "Role: " + role, Toast.LENGTH_LONG).show();
+
+                        // 3. Check role (Handle nulls and spaces)
+                        if (role != null && "Staff".equalsIgnoreCase(role.trim())) {
                             startActivity(new Intent(LogIn.this, staffhome.class));
                         } else {
+                            // Default to customer for "guest", "student", or null
                             startActivity(new Intent(LogIn.this, customerhome.class));
                         }
                         finish();
